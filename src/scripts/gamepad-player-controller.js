@@ -9,10 +9,13 @@ export class GamepadPlayerController {
       down: false,
     };
 
-    this.actionsFired = {
-      action1: false, // Shoot
-      action2: false, // Dodge
+    this.actionsPressed = {
+      action1: false, // shoot
+      action2: false, // dodge
     };
+
+    this.fireAction1 = false;
+    this.canRepeat = true;
 
     window.addEventListener("gamepadconnected", (e) => {
       console.log("Gamepad connected.");
@@ -22,12 +25,22 @@ export class GamepadPlayerController {
 
   update() {
     if (this.controllerIndex !== undefined) {
-      const gamepad = navigator.getGamepads()[this.controllerIndex];
-      this.actionsFired.action1 = gamepad.buttons[0].touched;
-      this.actionsFired.action2 = gamepad.buttons[1].touched;
-      this.keysPressed.right = gamepad.buttons[15].pressed;
-      this.keysPressed.left = gamepad.buttons[14].pressed;
-      console.log(gamepad.buttons);
+      const { buttons } = navigator.getGamepads()[this.controllerIndex];
+      
+      this.keysPressed.right = buttons[15].pressed;
+      this.keysPressed.left = buttons[14].pressed;
+
+      if(buttons[0].pressed && this.canRepeat){
+        this.actionsPressed.action1 = true;
+        this.canRepeat = false;
+      } else if (!buttons[0].pressed && !this.canRepeat) {
+        // this.actionsPressed.action1 = false;
+        this.canRepeat = true;
+      }
+
+      if(buttons[1].pressed){
+        this.actionsPressed.action2 = true;
+      }
     }
   }
 }

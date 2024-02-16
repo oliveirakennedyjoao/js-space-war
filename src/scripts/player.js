@@ -1,10 +1,11 @@
 import { CANVAS_WIDTH } from "../../main.js";
 import { GamepadPlayerController } from "./gamepad-player-controller.js";
+import { Shoot } from "./shoot.js";
 import { PlayerController } from "./player-controller.js";
 import { Sprite } from "./sprite.js";
 
 export class Player {
-  constructor(context) {
+  constructor(context, particles) {
     this.position = {
       x: 500,
       y: 1550,
@@ -13,6 +14,9 @@ export class Player {
     // this.playerController = new PlayerController();
     this.playerController = new GamepadPlayerController();
     this.sprite = new Sprite("./src/assets/sprites/player.png");
+    this.laser = new Sprite("./src/assets/sprites/laser_green.png");
+
+    this.particles = particles;
 
     this.PLAYER_WIDTH = 180;
     this.PLAYER_HEIGHT = 225;
@@ -31,18 +35,15 @@ export class Player {
       this.position.x += 10;
       return;
     }
+  }
 
-    if (this.playerController.actionsFired.action1) {
-      this.playerController.actionsFired.action1 = false;
-    }
-
-    if (this.playerController.actionsFired.action2) {
-      this.playerController.actionsFired.action2 = false;
-    }
+  shoot() {
+    // width, height, posX, posY, context, particle_image
+    this.particles.push(new Shoot(this.PLAYER_WIDTH, 33, this.position.x, this.position.y, this.context, this.laser));
+    // console.log(this.particles);
   }
 
   render() {
-    // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
     this.context.drawImage(
       this.sprite.img,
       0,
@@ -54,5 +55,10 @@ export class Player {
       this.PLAYER_WIDTH,
       this.PLAYER_HEIGHT
     );
+
+    if (this.playerController.actionsPressed.action1) {
+      this.shoot();
+      this.playerController.actionsPressed.action1 = false;
+    }
   }
 }

@@ -6,9 +6,18 @@ import { Enemy } from "./enemy.js";
 export class Game {
   constructor(context) {
     this.context = context;
-    this.player = new Player(context);
+    this.particles = [];
+    this.player = new Player(context, this.particles);
     this.background = new Background(context);
     this.enemy = new Enemy(context);
+  }
+
+  destroy() {
+    for (let i = 0; i < this.particles.length; i++) {
+      if (this.particles[i].destroy === true) {
+        this.particles.splice(i, 1);
+      }
+    }
   }
 
   clearScreen() {
@@ -19,6 +28,7 @@ export class Game {
     this.background.render();
     this.player.render();
     this.enemy.render();
+    this.particles.forEach((particle) => particle.render());
   }
 
   update() {
@@ -26,5 +36,7 @@ export class Game {
     this.player.playerController.update();
     this.player.update();
     this.enemy.update();
+    this.particles.forEach((particle) => particle.update());
+    
   }
 }

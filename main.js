@@ -10,12 +10,19 @@ canvas.height = CANVAS_HEIGHT;
 
 const game = new Game(context);
 
-function run() {
+let previousTime = 0;
+
+function run(currentTime) {
+
+  game.destroy();
   game.update();
   game.clearScreen();
   game.render();
 
+  DELTA_TIME = (currentTime - previousTime) / 1000;
+  previousTime = currentTime;
+
   window.requestAnimationFrame(run);
 }
 
-run();
+run(0);
