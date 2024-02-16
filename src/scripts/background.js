@@ -18,6 +18,7 @@ export class Background {
     this.#bg1Position = { x: 0, y: 0, velocityX: 0, velocityY: 1 };
     this.#bg2Position = { x: 0, y: 0, velocityX: 0, velocityY: 2 };
     this.#bgSound = new Sound("./src/assets/sounds/Fly.mp3");
+    this.#bgSound.play();
   }
 
   render() {

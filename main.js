@@ -13,16 +13,24 @@ const game = new Game(context);
 let previousTime = 0;
 
 function run(currentTime) {
+  if(!PAUSE_GAME){
+    game.destroy();
+    game.update();
+    game.clearScreen();
+    game.render();
 
-  game.destroy();
-  game.update();
-  game.clearScreen();
-  game.render();
-
-  DELTA_TIME = (currentTime - previousTime) / 1000;
-  previousTime = currentTime;
-
+    DELTA_TIME = (currentTime - previousTime) / 1000;
+    previousTime = currentTime;
+  }
+  
   window.requestAnimationFrame(run);
 }
+
+window.addEventListener("keydown", (event) => {
+  console.log(event.code);
+ if(event.code === "Space"){
+  PAUSE_GAME = !PAUSE_GAME;
+ }
+});
 
 run(0);

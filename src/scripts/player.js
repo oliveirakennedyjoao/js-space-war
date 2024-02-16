@@ -3,6 +3,7 @@ import { GamepadPlayerController } from "./gamepad-player-controller.js";
 import { Shoot } from "./shoot.js";
 import { PlayerController } from "./player-controller.js";
 import { Sprite } from "./sprite.js";
+import { Sound } from "./sound.js";
 
 export class Player {
   constructor(context, particles) {
@@ -15,6 +16,8 @@ export class Player {
     this.playerController = new GamepadPlayerController();
     this.sprite = new Sprite("./src/assets/sprites/player.png");
     this.laser = new Sprite("./src/assets/sprites/laser_green.png");
+
+    this.laserSound = new Sound("./src/assets/sounds/laser_shooting_sfx.wav", false)
 
     this.particles = particles;
 
@@ -40,7 +43,7 @@ export class Player {
   shoot() {
     // width, height, posX, posY, context, particle_image
     this.particles.push(new Shoot(this.PLAYER_WIDTH, 33, this.position.x, this.position.y, this.context, this.laser));
-    // console.log(this.particles);
+    this.laserSound.play();
   }
 
   render() {

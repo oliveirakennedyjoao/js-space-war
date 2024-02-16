@@ -1,9 +1,16 @@
 export class Sound {
-  constructor(audioFileUrl) {
+  constructor(audioFileUrl, loop = true, volume = 0.1) {
     this.sound = new Audio();
     this.sound.src = audioFileUrl;
-    this.sound.loop = true;
-    this.sound.volume = 0.2;
-    // this.sound.play();
+    this.sound.loop = loop;
+    this.sound.volume = volume;
+  }
+
+  play() {
+    if(!this.sound.paused) {
+      this.sound.currentTime = 0;
+      return;
+    }
+    this.sound.play();
   }
 }

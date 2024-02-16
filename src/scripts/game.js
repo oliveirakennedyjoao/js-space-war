@@ -2,6 +2,7 @@ import { Player } from "./player.js";
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../../main.js";
 import { Background } from "./background.js";
 import { Enemy } from "./enemy.js";
+import { CollisionDetector } from "./collision-detector.js";
 
 export class Game {
   constructor(context) {
@@ -10,6 +11,13 @@ export class Game {
     this.player = new Player(context, this.particles);
     this.background = new Background(context);
     this.enemy = new Enemy(context);
+
+    this.collisionDetector = new CollisionDetector(
+      this.player,
+      this.particles,
+      [this.enemy],
+      this.context
+    );
   }
 
   destroy() {
@@ -29,6 +37,7 @@ export class Game {
     this.player.render();
     this.enemy.render();
     this.particles.forEach((particle) => particle.render());
+    this.collisionDetector.renderCollisionBoxes();
   }
 
   update() {
@@ -37,6 +46,6 @@ export class Game {
     this.player.update();
     this.enemy.update();
     this.particles.forEach((particle) => particle.update());
-    
+    this.collisionDetector.detect();
   }
 }
