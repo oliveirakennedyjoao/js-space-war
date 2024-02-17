@@ -12,14 +12,12 @@ export class CollisionDetector {
         if (this.isColliding(shoot, enemy)) {
           shoot.destroy = true;
           enemy.destroy = true;
-          console.log("colidiu");
         }
       });
     });
   }
 
   isColliding(shoot, enemy) {
-    // console.log(shoot, enemy)
     return (
       shoot.posX < enemy.position.x + enemy.width &&
       shoot.posX + shoot.width > enemy.position.x &&

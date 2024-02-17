@@ -7,9 +7,13 @@ export class PlayerController {
       down: false,
     };
 
-    this.actionsFired = {
-      action1: false, // Shoot
+    this.actionsPressed = {
+      action1: false, // shoot
+      action2: false, // dodge
     };
+
+    this.fireAction1 = false;
+    this.canRepeat = true;
 
     document.addEventListener("keydown", (ev) => this.onKeyPressed(ev));
     document.addEventListener("keyup", (ev) => this.onKeyReleased(ev));
@@ -33,6 +37,12 @@ export class PlayerController {
       case 83:
         this.keysPressed.down = true;
         break;
+      case 32:
+        if (this.canRepeat) {
+          this.actionsPressed.action1 = true;
+          this.canRepeat = false;
+        }
+        break;
     }
   }
 
@@ -49,6 +59,11 @@ export class PlayerController {
         break;
       case 83:
         this.keysPressed.down = false;
+        break;
+      case 32:
+        if (!this.canRepeat) {
+          this.canRepeat = true;
+        }
         break;
     }
   }

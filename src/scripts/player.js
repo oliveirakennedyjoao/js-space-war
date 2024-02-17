@@ -12,12 +12,15 @@ export class Player {
       y: 1550,
     };
     this.context = context;
-    // this.playerController = new PlayerController();
-    this.playerController = new GamepadPlayerController();
+    this.playerController = new PlayerController();
+    // this.playerController = new GamepadPlayerController();
     this.sprite = new Sprite("./src/assets/sprites/player.png");
     this.laser = new Sprite("./src/assets/sprites/laser_green.png");
 
-    this.laserSound = new Sound("./src/assets/sounds/laser_shooting_sfx.wav", false)
+    this.laserSound = new Sound(
+      "./src/assets/sounds/laser_shooting_sfx.wav",
+      false
+    );
 
     this.particles = particles;
 
@@ -42,7 +45,16 @@ export class Player {
 
   shoot() {
     // width, height, posX, posY, context, particle_image
-    this.particles.push(new Shoot(this.PLAYER_WIDTH, 33, this.position.x, this.position.y, this.context, this.laser));
+    this.particles.push(
+      new Shoot(
+        this.PLAYER_WIDTH,
+        33,
+        this.position.x,
+        this.position.y,
+        this.context,
+        this.laser
+      )
+    );
     this.laserSound.play();
   }
 
