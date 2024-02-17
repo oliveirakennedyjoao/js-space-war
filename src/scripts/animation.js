@@ -1,11 +1,19 @@
+export const ANIMATION_STATE = {
+  PLAYING: 1,
+  FINISHED: 2,
+};
+
 export class Animation {
-  constructor(image, frames) {
+  constructor(image, frames, frameDelay, isLoop, onAnimationEnd) {
     this.image = image;
     this.frames = frames;
     this.totalFrames = this.frames.length;
     this.currentFrame = 0;
-    this.frameDelay = 50;
+    this.frameDelay = frameDelay;
     this.frameDelayCounter = 0;
+    this.isLoop = isLoop;
+    this.destroy = false;
+    this.onAnimationEnd = onAnimationEnd;
   }
 
   update() {
@@ -18,8 +26,14 @@ export class Animation {
   }
 
   nextFrame() {
-    this.currentFrame + 1 >= this.totalFrames
-      ? (this.currentFrame = 0)
-      : this.currentFrame++;
+    if (this.currentFrame + 1 >= this.totalFrames) {
+      if (this.isLoop) {
+        this.currentFrame = 0;
+      } else {
+        this.onAnimationEnd();
+      }
+    } else {
+      this.currentFrame++;
+    }
   }
 }

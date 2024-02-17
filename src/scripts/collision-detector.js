@@ -11,7 +11,7 @@ export class CollisionDetector {
       this.enemies.forEach((enemy) => {
         if (this.isColliding(shoot, enemy)) {
           shoot.destroy = true;
-          enemy.destroy = true;
+          enemy.hitted = true;
         }
       });
     });

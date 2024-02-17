@@ -4,6 +4,7 @@ import { Background } from "./background.js";
 import { Enemy } from "./enemy.js";
 import { CollisionDetector } from "./collision-detector.js";
 import { UI } from "./ui.js";
+import { Sprite } from "./sprite.js";
 
 export class Game {
   constructor(context) {
@@ -11,20 +12,28 @@ export class Game {
     this.particles = [];
     this.player = new Player(context, this.particles);
     this.background = new Background(context);
-    this.enemy = new Enemy(context);
+    this.enemies = [new Enemy(context)];
     this.ui = new UI(context);
     this.collisionDetector = new CollisionDetector(
       this.player,
       this.particles,
-      [this.enemy],
+      this.enemies,
       this.context
     );
+
+    this.elements = [];
   }
 
   destroy() {
     for (let i = 0; i < this.particles.length; i++) {
       if (this.particles[i].destroy === true) {
         this.particles.splice(i, 1);
+      }
+    }
+    for (let i = 0; i < this.enemies.length; i++) {
+      if (this.enemies[i].destroy === true) {
+        this.enemies.splice(i, 1);
+        this.enemies.push(new Enemy(this.context));
       }
     }
   }
@@ -37,11 +46,13 @@ export class Game {
     this.background.render();
     this.player.render();
 
-    if (this.enemy.destroy) {
-      this.enemy.playDeadAnimation();
-    } else {
-      this.enemy.render();
-    }
+    this.enemies.forEach((enemy) => {
+      if (enemy.hitted) {
+        enemy.playDeadAnimation();
+      } else {
+        enemy.render();
+      }
+    });
 
     this.particles.forEach((particle) => particle.render());
     this.collisionDetector.renderCollisionBoxes();
@@ -53,11 +64,13 @@ export class Game {
     // this.player.playerController.update();
     this.player.update();
 
-    if (this.enemy.destroy) {
-      this.enemy.explosionAnimation.update();
-    } else {
-      this.enemy.update();
-    }
+    this.enemies.forEach((enemy) => {
+      if (enemy.hitted) {
+        enemy.explosionAnimation.update();
+      } else {
+        enemy.update();
+      }
+    });
 
     this.particles.forEach((particle) => particle.update());
     this.collisionDetector.detect();
