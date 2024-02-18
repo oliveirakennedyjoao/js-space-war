@@ -3,13 +3,6 @@ import { Sound } from "./sound.js";
 import { Sprite } from "./sprite.js";
 
 export class Background {
-  background;
-  background1;
-  bg1Position;
-  background2;
-  bg2Position;
-  bgSound;
-
   constructor(context) {
     this.context = context;
     this.background = new Sprite("./src/assets/sprites/bkgd_0.png");
@@ -18,7 +11,7 @@ export class Background {
     this.bg1Position = { x: 0, y: 0, velocityX: 0, velocityY: 1 };
     this.bg2Position = { x: 0, y: 0, velocityX: 0, velocityY: 2 };
     this.bgSound = new Sound("./src/assets/sounds/Fly.mp3");
-    // this.#bgSound.play();
+    // this.bgSound.play();
   }
 
   render() {

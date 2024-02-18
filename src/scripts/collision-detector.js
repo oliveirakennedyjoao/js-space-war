@@ -49,4 +49,16 @@ export class CollisionDetector {
       )
     );
   }
+
+  renderCollisionBoxesParams(elements) {
+    this.context.strokeStyle = "yellow";
+    elements.forEach((element) =>
+      this.context.strokeRect(
+        element.x - 2,
+        element.y - 2,
+        element.width + 2,
+        element.height + 2
+      )
+    );
+  }
 }

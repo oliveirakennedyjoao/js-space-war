@@ -1,6 +1,7 @@
 import { Frame } from "./frame.js";
 import { Sprite } from "./sprite.js";
 import { Animation } from "./animation.js";
+import { Sound } from "./sound.js";
 
 export class Enemy {
   constructor(context) {
@@ -12,8 +13,8 @@ export class Enemy {
     this.position = {
       x: 300,
       y: -100,
-      velocityX: 5,
-      velocityY: 2,
+      velocityX: 200,
+      velocityY: 200,
     };
     this.direction = 1;
     this.hitted = false;
@@ -43,21 +44,24 @@ export class Enemy {
       false,
       this.onDeadAnimationEnd.bind(this)
     );
+
+    this.deathSound = new Sound("./src/assets/sounds/explosion.wav", false);
+    this.canPlayDeathSound = true;
   }
 
   update() {
     if (this.position.y < 400) {
-      this.position.y += this.position.velocityY;
+      this.position.y += this.position.velocityY * DELTA_TIME;
     }
 
     if (this.direction === 1) {
       this.position.x + 150 + this.position.velocityX >= 2048
         ? this.invertDirection()
-        : (this.position.x += this.position.velocityX);
+        : (this.position.x += this.position.velocityX * DELTA_TIME);
     } else {
       this.position.x + this.position.velocityX <= 0
         ? this.invertDirection()
-        : (this.position.x -= this.position.velocityX);
+        : (this.position.x -= this.position.velocityX * DELTA_TIME);
     }
   }
 
@@ -82,6 +86,11 @@ export class Enemy {
   playDeadAnimation() {
     const { startX, startY, finalX, finalY } =
       this.explosionAnimation.frames[this.explosionAnimation.currentFrame];
+
+    if (this.canPlayDeathSound) {
+      this.deathSound.play();
+      this.canPlayDeathSound = false;
+    }
 
     this.context.drawImage(
       this.explosion.img,

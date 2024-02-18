@@ -1,4 +1,3 @@
-import { CANVAS_WIDTH } from "../../main.js";
 import { GamepadPlayerController } from "./gamepad-player-controller.js";
 import { Shoot } from "./shoot.js";
 import { PlayerController } from "./player-controller.js";
@@ -21,6 +20,15 @@ export class Player {
       "./src/assets/sounds/laser_shooting_sfx.wav",
       false
     );
+
+    this.spaceShipSound = new Sound(
+      "./src/assets/sounds/spaceship.mp3",
+      true,
+      0.7
+    );
+    this.spaceShipSound.play();
+
+    console.log("PlayerController");
 
     this.particles = particles;
 
