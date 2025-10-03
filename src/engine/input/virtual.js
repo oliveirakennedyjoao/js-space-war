@@ -1,4 +1,4 @@
-export class VirtualController {
+export class Virtual {
   constructor() {
     this.keysPressed = {
       left: false,

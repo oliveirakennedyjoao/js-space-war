@@ -1,4 +1,4 @@
-export class GamepadController {
+export class Gamepad {
   constructor() {
     this.controllerIndex = undefined;
 

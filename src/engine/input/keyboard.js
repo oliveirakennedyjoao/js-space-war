@@ -1,4 +1,4 @@
-export class KeyboardController {
+export class Keyboard {
   constructor() {
     this.keysPressed = {
       left: false,
