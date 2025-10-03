@@ -1,6 +1,6 @@
 // import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../main";
-import { Sound } from "./sound.js";
-import { Sprite } from "./sprite.js";
+import { Sound } from "../engine/audio/sound.js";
+import { Sprite } from "../engine/renderer/sprite.js";
 
 export class Background {
   constructor(context) {

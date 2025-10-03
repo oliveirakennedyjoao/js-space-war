@@ -1,4 +1,4 @@
-export class PlayerController {
+export class VirtualController {
   constructor() {
     this.keysPressed = {
       left: false,
@@ -15,29 +15,34 @@ export class PlayerController {
     this.fireAction1 = false;
     this.canRepeat = true;
 
-    document.addEventListener("keydown", (ev) => this.onKeyPressed(ev));
-    document.addEventListener("keyup", (ev) => this.onKeyReleased(ev));
+    document.querySelectorAll("button").forEach((btn) => {
+      btn.addEventListener("touchstart", (ev) => this.onVirtualKeyPressed(ev));
+      btn.addEventListener("touchend", (ev) => this.onVirtualKeyReleased(ev));
+      btn.addEventListener("dblclick", function (e) {
+        e.preventDefault();
+      });
+    });
   }
 
   getKeysPressed() {
     return this.keysPressed;
   }
 
-  onKeyPressed(keyPressed) {
-    switch (keyPressed.keyCode) {
-      case 68:
+  onKeyPressed(event) {
+    switch (event.target.id) {
+      case "move-right":
         this.keysPressed.right = true;
         break;
-      case 65:
+      case "move-left":
         this.keysPressed.left = true;
         break;
-      case 87:
+      case "move-up":
         this.keysPressed.up = true;
         break;
-      case 83:
+      case "move-down":
         this.keysPressed.down = true;
         break;
-      case 32:
+      case "fire":
         if (this.canRepeat) {
           this.actionsPressed.action1 = true;
           this.canRepeat = false;
@@ -46,21 +51,21 @@ export class PlayerController {
     }
   }
 
-  onKeyReleased(keyReleased) {
-    switch (keyReleased.keyCode) {
-      case 68:
+  onKeyReleased(event) {
+    switch (event.target.id) {
+      case "move-right":
         this.keysPressed.right = false;
         break;
-      case 65:
+      case "move-left":
         this.keysPressed.left = false;
         break;
-      case 87:
+      case "move-up":
         this.keysPressed.up = false;
         break;
-      case 83:
+      case "move-down":
         this.keysPressed.down = false;
         break;
-      case 32:
+      case "fire":
         if (!this.canRepeat) {
           this.canRepeat = true;
         }

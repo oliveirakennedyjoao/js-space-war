@@ -1,4 +1,4 @@
-import { Sprite } from "./sprite.js";
+import { Sprite } from "../engine/renderer/sprite.js";
 
 export class Asteroid {
   constructor(context, x, y) {

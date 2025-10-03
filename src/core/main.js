@@ -1,13 +1,42 @@
-import { Game } from "./src/scripts/game.js";
+import { Game } from "./game.js";
 
 const canvas = document.getElementById("game-screen");
 const context = canvas.getContext("2d");
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
+let DELTA_TIME = 0;
+let PAUSE_GAME = false;
+const CANVAS_WIDTH = 1024;
+const CANVAS_HEIGHT = 2048;
+
+console.log(window.screen);
+
 const game = new Game(context);
 
 let previousTime = 0;
+
+document.body.addEventListener(
+  "touchstart",
+  function (e) {
+    e.preventDefault();
+  },
+  { passive: false }
+);
+document.body.addEventListener(
+  "touchmove",
+  function (e) {
+    e.preventDefault();
+  },
+  { passive: false }
+);
+document.body.addEventListener(
+  "touchend",
+  function (e) {
+    e.preventDefault();
+  },
+  { passive: false }
+);
 
 function run(currentTime) {
   if (!PAUSE_GAME) {

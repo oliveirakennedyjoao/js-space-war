@@ -1,10 +1,10 @@
-import { Player } from "./player.js";
-import { Background } from "./background.js";
-import { Enemy } from "./enemy.js";
-import { CollisionDetector } from "./collision-detector.js";
-import { UI } from "./ui.js";
-import { Sprite } from "./sprite.js";
-import { Asteroid } from "./asteroid.js";
+import { Player } from "../gameplay/player.js";
+import { Background } from "../gameplay/background.js";
+import { Enemy } from "../gameplay/enemy.js";
+import { CollisionDetector } from "../engine/physics/collision-detector.js";
+import { UI } from "../ui/ui.js";
+import { Sprite } from "../engine/renderer/sprite.js";
+import { Asteroid } from "../gameplay/asteroid.js";
 
 export class Game {
   constructor(context) {
