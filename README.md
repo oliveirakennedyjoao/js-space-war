@@ -39,9 +39,9 @@ src/
 		├── spawn-manager.js 	# Gerencia spawn de inimigos/asteroids
 		├── score-manager.js 	# Sistema de pontuação
 		└── power-up-manager.js # Sistema de power-ups
-	└── background.js # Background específico do jogo
-├── ui/ # Interface do usuário
-	├── hud.js # HUD do jogo (vida, pontos, etc.)
+	└── background.js 			# Background específico do jogo
+├── ui/ 						# Interface do usuário
+	├── hud.js 					# HUD do jogo (vida, pontos, etc.)
 	├── menus/ # Menus do jogo
 		├── main-menu.js
 		├── pause-menu.js
