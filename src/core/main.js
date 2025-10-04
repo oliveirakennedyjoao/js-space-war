@@ -5,13 +5,6 @@ const context = canvas.getContext("2d");
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
-let DELTA_TIME = 0;
-let PAUSE_GAME = false;
-const CANVAS_WIDTH = 1024;
-const CANVAS_HEIGHT = 2048;
-
-console.log(window.screen);
-
 const game = new Game(context);
 
 let previousTime = 0;

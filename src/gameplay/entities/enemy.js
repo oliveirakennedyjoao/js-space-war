@@ -1,7 +1,7 @@
-import { Frame } from "../engine/tools/frame.js";
-import { Sprite } from "../engine/renderer/sprite.js";
-import { Animation } from "../engine/renderer/animation.js";
-import { Sound } from "../engine/audio/sound.js";
+import { Frame } from "../../engine/renderer/frame.js";
+import { Sprite } from "../../engine/renderer/sprite.js";
+import { Animation } from "../../engine/renderer/animation.js";
+import { Sound } from "../../engine/audio/sound.js";
 
 export class Enemy {
   constructor(context) {

@@ -1,10 +1,12 @@
-import { Player } from "../gameplay/player.js";
+// Entities
+
+import { Player } from "../gameplay/entities/player.js";
+import { Enemy } from "../gameplay/entities/enemy.js";
+import { Asteroid } from "../gameplay/entities/asteroid.js";
 import { Background } from "../gameplay/background.js";
-import { Enemy } from "../gameplay/enemy.js";
 import { CollisionDetector } from "../engine/physics/collision-detector.js";
 import { UI } from "../ui/ui.js";
 import { Sprite } from "../engine/renderer/sprite.js";
-import { Asteroid } from "../gameplay/asteroid.js";
 
 export class Game {
   constructor(context) {

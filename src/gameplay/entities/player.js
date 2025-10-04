@@ -1,7 +1,7 @@
-import { KeyboardController } from "../engine/input/keyboard.js";
-import { Shoot } from "./shoot.js";
-import { Sprite } from "../engine/renderer/sprite.js";
-import { Sound } from "../engine/audio/sound.js";
+import { Keyboard } from "../../engine/input/keyboard.js";
+import { Shoot } from "../projectiles/shoot.js";
+import { Sprite } from "../../engine/renderer/sprite.js";
+import { Sound } from "../../engine/audio/sound.js";
 
 export class Player {
   constructor(context, particles) {
@@ -10,7 +10,7 @@ export class Player {
       y: 1550,
     };
     this.context = context;
-    this.playerController = new KeyboardController();
+    this.playerController = new Keyboard();
     this.sprite = new Sprite("./src/assets/sprites/player.png");
     this.laser = new Sprite("./src/assets/sprites/laser_green.png");
 

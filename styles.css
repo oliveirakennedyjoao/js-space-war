@@ -17,10 +17,9 @@ body {
 }
 
 canvas {
-  width: 6%;
+  width: 60vh;
   height: 100vh;
   border-radius: 8px;
-  /* box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.3); */
   background-color: white;
   z-index: 999;
   border: 8px solid rgba(0, 0, 0, 0.8);
@@ -50,70 +49,4 @@ canvas {
   min-width: 60px;
   min-height: 60px;
   border-radius: 50%;
-}
-
-@keyframes swing {
-  0% {
-    transform: rotate(0);
-  }
-
-  25% {
-    transform: rotate(90deg);
-  }
-
-  50% {
-    transform: rotate(0);
-  }
-
-  75% {
-    transform: rotate(-90deg);
-  }
-
-  100% {
-    transform: rotate(0);
-  }
-}
-
-#bg-asteroid-1,
-#bg-asteroid-2,
-#bg-asteroid-3,
-#bg-asteroid-4 {
-  position: absolute;
-  animation: swing linear 15s infinite;
-}
-
-#bg-asteroid-1 {
-  top: 3rem;
-  left: 4rem;
-  width: 250px;
-  height: auto;
-  z-index: 0;
-  animation-duration: 25s;
-}
-
-#bg-asteroid-2 {
-  bottom: 4rem;
-  right: 4rem;
-  width: 200px;
-  height: auto;
-  z-index: 1;
-  animation-duration: 30s;
-}
-
-#bg-asteroid-3 {
-  top: 4rem;
-  right: 8rem;
-  width: 175px;
-  height: 175px;
-  z-index: 2;
-  animation-duration: 28s;
-}
-
-#bg-asteroid-4 {
-  bottom: 4rem;
-  left: 4rem;
-  width: 175px;
-  height: 175px;
-  z-index: 2;
-  animation-duration: 22s;
 }
