@@ -2,12 +2,16 @@ import { Keyboard } from "../../engine/input/keyboard.js";
 import { Shoot } from "../projectiles/shoot.js";
 import { Sprite } from "../../engine/renderer/sprite.js";
 import { Sound } from "../../engine/audio/sound.js";
-// import { draw } from "../../engine/renderer/drawer.js";
+
 export class Player {
   constructor(context, particles) {
+    this.type = "player";
     this.position = {
       x: 500,
       y: 1550,
+      velocityX: 0,
+      velocityY: 0,
+      angle: 0,
     };
     this.width = 180;
     this.height = 225;
@@ -67,18 +71,6 @@ export class Player {
   }
 
   render() {
-    // this.context.drawImage(
-    //   this.sprite.img,
-    //   0,
-    //   0,
-    //   1000,
-    //   1000,
-    //   this.position.x,
-    //   this.position.y,
-    //   this.PLAYER_WIDTH,
-    //   this.PLAYER_HEIGHT
-    // );
-
     draw(this);
 
     if (this.playerController.actionsPressed.action1) {

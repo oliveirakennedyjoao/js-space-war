@@ -6,7 +6,7 @@ import { Asteroid } from "../gameplay/entities/asteroid.js";
 import { Background } from "../gameplay/background.js";
 import { CollisionDetector } from "../engine/physics/collision-detector.js";
 import { UI } from "../ui/ui.js";
-import { Sprite } from "../engine/renderer/sprite.js";
+import { renderCollisionBoxes } from "../engine/tools/debug.js";
 
 export class Game {
   constructor(context) {
@@ -54,6 +54,7 @@ export class Game {
   }
 
   clearScreen() {
+    c;
     this.context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   }
 
@@ -70,14 +71,12 @@ export class Game {
     });
 
     this.particles.forEach((particle) => particle.render());
-    this.collisionDetector.renderCollisionBoxes();
-    this.collisionDetector.renderCollisionBoxesParams(this.obstacles);
+    renderCollisionBoxes([this.player, ...this.enemies]);
     this.ui.render();
   }
 
   update() {
     this.background.update();
-    // this.player.playerController.update();
     this.player.update();
     this.obstacles.forEach((obstacle) => obstacle.update());
     this.enemies.forEach((enemy) => {

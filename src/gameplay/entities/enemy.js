@@ -6,6 +6,7 @@ import { sinusoidalMovement } from "../../engine/physics/movement-controller.js"
 
 export class Enemy {
   constructor(context, player) {
+    this.type = "enemy";
     this.context = context;
     this.player = player;
     this.sprite = new Sprite("./src/assets/sprites/enemy.png");
@@ -17,6 +18,7 @@ export class Enemy {
       y: 100,
       velocityX: 200,
       velocityY: 200,
+      angle: 0,
     };
     this.direction = 1;
     this.hitted = false;

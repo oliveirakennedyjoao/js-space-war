@@ -1,7 +1,10 @@
 const CANVAS = document.getElementById("game-screen");
 const CONTEXT = CANVAS.getContext("2d");
 
-function draw(element) {
+function draw(element, flag) {
+  if (flag === "bg") {
+    console.log("Drawing background element:", element);
+  }
   CONTEXT.drawImage(
     element.sprite.img,
     element.sprite.frameStartX,
@@ -43,6 +46,12 @@ function rotateAndDraw(element, angle) {
 function drawRect(x, y, width, height, color) {
   CONTEXT.fillStyle = color;
   CONTEXT.fillRect(x, y, width, height);
+}
+
+function strokeRect(x, y, width, height, color = "red", lineWidth = 1) {
+  CONTEXT.lineWidth = lineWidth;
+  CONTEXT.strokeStyle = color;
+  CONTEXT.strokeRect(x, y, width, height);
 }
 
 function clear() {

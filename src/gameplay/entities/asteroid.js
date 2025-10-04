@@ -1,4 +1,3 @@
-import Drawer from "../../engine/renderer/drawer.js";
 import { Sprite } from "../../engine/renderer/sprite.js";
 
 export class Asteroid {
@@ -11,7 +10,6 @@ export class Asteroid {
     this.height = 150;
     this.velocityY = 200;
     this.destroy = false;
-    this.drawer = new Drawer();
 
     // Propriedades de rotação
     this.angle = 0; // Ângulo atual
@@ -31,24 +29,6 @@ export class Asteroid {
   }
 
   render() {
-    const centerX = (this.x + this.width) / 2;
-    const centerY = (this.y + this.height) / 2;
-    this.drawer.rotate(this, this.angle); // Usa o ângulo dinâmico
-    // this.context.save();
-    // this.context.translate(centerX, centerY);
-    // this.context.rotate(0.4);
-    // this.context.drawImage(
-    //   this.asteroidSprite.img,
-    //   0,
-    //   0,
-    //   150,
-    //   150,
-    //   this.x,
-    //   this.y,
-    //   this.width,
-    //   this.height
-    // );
-    // this.context.translate(this.x, this.y);
-    // this.context.restore();
+    rotateAndDraw(this, this.angle);
   }
 }
