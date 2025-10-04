@@ -9,28 +9,6 @@ const game = new Game(context);
 
 let previousTime = 0;
 
-document.body.addEventListener(
-  "touchstart",
-  function (e) {
-    e.preventDefault();
-  },
-  { passive: false }
-);
-document.body.addEventListener(
-  "touchmove",
-  function (e) {
-    e.preventDefault();
-  },
-  { passive: false }
-);
-document.body.addEventListener(
-  "touchend",
-  function (e) {
-    e.preventDefault();
-  },
-  { passive: false }
-);
-
 function run(currentTime) {
   if (!PAUSE_GAME) {
     game.destroy();

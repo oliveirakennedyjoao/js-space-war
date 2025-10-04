@@ -55,11 +55,11 @@ export class Enemy {
     }
 
     if (this.direction === 1) {
-      this.position.x + 150 + this.position.velocityX >= 2048
+      this.position.x + 150 >= CANVAS_WIDTH
         ? this.invertDirection()
         : (this.position.x += this.position.velocityX * DELTA_TIME);
     } else {
-      this.position.x + this.position.velocityX <= 0
+      this.position.x <= 0
         ? this.invertDirection()
         : (this.position.x -= this.position.velocityX * DELTA_TIME);
     }

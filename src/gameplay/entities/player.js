@@ -2,16 +2,23 @@ import { Keyboard } from "../../engine/input/keyboard.js";
 import { Shoot } from "../projectiles/shoot.js";
 import { Sprite } from "../../engine/renderer/sprite.js";
 import { Sound } from "../../engine/audio/sound.js";
-
+// import { draw } from "../../engine/renderer/drawer.js";
 export class Player {
   constructor(context, particles) {
     this.position = {
       x: 500,
       y: 1550,
     };
+    this.width = 180;
+    this.height = 225;
     this.context = context;
     this.playerController = new Keyboard();
-    this.sprite = new Sprite("./src/assets/sprites/player.png");
+    this.sprite = new Sprite("./src/assets/sprites/player.png", {
+      startX: 0,
+      startY: 0,
+      finalX: 1000,
+      finalY: 1000,
+    });
     this.laser = new Sprite("./src/assets/sprites/laser_green.png");
 
     this.laserSound = new Sound(
@@ -26,12 +33,7 @@ export class Player {
     );
     this.spaceShipSound.play();
 
-    console.log("PlayerController");
-
     this.particles = particles;
-
-    this.PLAYER_WIDTH = 180;
-    this.PLAYER_HEIGHT = 225;
   }
 
   update() {
@@ -42,7 +44,7 @@ export class Player {
 
     if (
       this.playerController.keysPressed.right &&
-      this.position.x < CANVAS_WIDTH - this.PLAYER_WIDTH
+      this.position.x < CANVAS_WIDTH - this.width
     ) {
       this.position.x += 10;
       return;
@@ -65,17 +67,19 @@ export class Player {
   }
 
   render() {
-    this.context.drawImage(
-      this.sprite.img,
-      0,
-      0,
-      1000,
-      1000,
-      this.position.x,
-      this.position.y,
-      this.PLAYER_WIDTH,
-      this.PLAYER_HEIGHT
-    );
+    // this.context.drawImage(
+    //   this.sprite.img,
+    //   0,
+    //   0,
+    //   1000,
+    //   1000,
+    //   this.position.x,
+    //   this.position.y,
+    //   this.PLAYER_WIDTH,
+    //   this.PLAYER_HEIGHT
+    // );
+
+    draw(this);
 
     if (this.playerController.actionsPressed.action1) {
       this.shoot();

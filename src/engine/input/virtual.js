@@ -14,13 +14,32 @@ export class Virtual {
 
     this.fireAction1 = false;
     this.canRepeat = true;
+    this.setupPreventScrollOnTouch();
+    this.setupTouchListeners();
+  }
 
+  setupTouchListeners() {
     document.querySelectorAll("button").forEach((btn) => {
       btn.addEventListener("touchstart", (ev) => this.onVirtualKeyPressed(ev));
       btn.addEventListener("touchend", (ev) => this.onVirtualKeyReleased(ev));
       btn.addEventListener("dblclick", function (e) {
         e.preventDefault();
       });
+    });
+  }
+
+  setupPreventScrollOnTouch() {
+    const preventCallback = (event) => {
+      event.preventDefault();
+    };
+    document.body.addEventListener("touchstart", preventCallback, {
+      passive: false,
+    });
+    document.body.addEventListener("touchmove", preventCallback, {
+      passive: false,
+    });
+    document.body.addEventListener("touchend", preventCallback, {
+      passive: false,
     });
   }
 
