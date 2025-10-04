@@ -1,6 +1,6 @@
 # js-space-war
 
-![pc game view](./docs/image.png)
+![pc game view](docs/pc-view.png)
 
 A Spaceship war game made using pure HTML, CSS and JavaScript.
 
