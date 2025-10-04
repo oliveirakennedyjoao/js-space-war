@@ -1,12 +1,7 @@
 import { Sprite } from "../../engine/renderer/sprite.js";
 export class Shoot {
-  constructor(x, y) {
-    this.sprite = new Sprite("./src/assets/sprites/laser_green.png", {
-      startX: 0,
-      startY: 0,
-      finalX: 9,
-      finalY: 33,
-    });
+  constructor(sprite, x, y) {
+    this.sprite = sprite;
     this.type = "shoot";
     this.position = { x: x, y: y };
     this.velocity = { x: 0, y: 20 };

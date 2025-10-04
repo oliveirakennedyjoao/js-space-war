@@ -7,22 +7,43 @@ import { Background } from "../gameplay/background.js";
 import { detectCollisions } from "../engine/physics/collision-detector.js";
 import { UI } from "../ui/ui.js";
 import { renderCollisionBoxes } from "../engine/tools/debug.js";
+import { Sprite } from "../engine/renderer/sprite.js";
 
+const PLAYER_SPRITE = new Sprite("./src/assets/sprites/player.png", {
+  startX: 0,
+  startY: 0,
+  finalX: 1000,
+  finalY: 1000,
+});
+
+const ENEMY_SPRITE = new Sprite("./src/assets/sprites/enemy.png", {
+  startX: 0,
+  startY: 0,
+  finalX: 1000,
+  finalY: 1000,
+});
+
+const ASTEROID_SPRITE = new Sprite("./src/assets/sprites/asteroid.png");
+const SHOOT_SPRITE = new Sprite("./src/assets/sprites/laser_green.png", {
+  startX: 0,
+  startY: 0,
+  finalX: 9,
+  finalY: 33,
+});
 export class Game {
   constructor(context) {
     this.context = context;
     this.particles = [];
-    this.player = new Player(context, this.particles);
+    this.player = new Player(
+      context,
+      this.particles,
+      PLAYER_SPRITE,
+      SHOOT_SPRITE
+    );
     this.background = new Background(context);
-    this.enemies = [new Enemy(context, this.player)];
+    this.enemies = [new Enemy(ENEMY_SPRITE, context, this.player)];
     this.ui = new UI(this.context, this.player);
-    this.obstacles = [
-      this.generateRandomPositionAsteroid(),
-      this.generateRandomPositionAsteroid(),
-      this.generateRandomPositionAsteroid(),
-      this.generateRandomPositionAsteroid(),
-      this.generateRandomPositionAsteroid(),
-    ];
+    this.obstacles = [new Asteroid(ASTEROID_SPRITE)];
 
     this.elements = [];
   }
@@ -36,13 +57,13 @@ export class Game {
     for (let i = 0; i < this.enemies.length; i++) {
       if (this.enemies[i].destroy === true) {
         this.enemies.splice(i, 1);
-        this.enemies.push(new Enemy(this.context));
+        this.enemies.push(new Enemy(ENEMY_SPRITE, this.context));
       }
     }
     for (let i = 0; i < this.obstacles.length; i++) {
       if (this.obstacles[i].destroy === true) {
         this.obstacles.splice(i, 1);
-        this.obstacles.push(this.generateRandomPositionAsteroid());
+        this.obstacles.push(new Asteroid(ASTEROID_SPRITE));
       }
     }
   }
@@ -126,10 +147,5 @@ export class Game {
         return;
       }
     );
-  }
-
-  generateRandomPositionAsteroid() {
-    const randomX = Math.floor(Math.random() * 2048);
-    return new Asteroid(randomX, -100);
   }
 }

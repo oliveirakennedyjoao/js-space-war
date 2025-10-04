@@ -1,11 +1,11 @@
 import { Sprite } from "../../engine/renderer/sprite.js";
-import { linearMovement } from "../../engine/physics/movement-controller.js";
+import { followTargetMovement } from "../../engine/physics/movement-controller.js";
 export class Asteroid {
-  constructor(x, y) {
+  constructor(sprite) {
     this.type = "asteroid";
-    this.sprite = new Sprite("./src/assets/sprites/asteroid.png");
-    this.position = { x: x, y: y };
-    this.velocity = { x: 0, y: 200 };
+    this.sprite = sprite;
+    this.position = this.generateOriginPosition();
+    this.velocity = this.generateVelocity();
     this.width = 155;
     this.height = 150;
     this.destroy = false;
@@ -13,10 +13,15 @@ export class Asteroid {
     // Propriedades de rotação
     this.angle = 0; // Ângulo atual
     this.rotationSpeed = 2; // Velocidade de rotação (radianos por segundo)
+
+    this.move = followTargetMovement;
+    this.destination = {
+      position: this.generateDestinationPosition(this.position),
+    };
   }
 
   update() {
-    linearMovement(this, this.velocity.x, this.velocity.y, DELTA_TIME);
+    this.move(this, this.destination, this.velocity.y, DELTA_TIME);
     this.angle += this.rotationSpeed * DELTA_TIME;
 
     if (this.position.y > CANVAS_HEIGHT) {
@@ -26,5 +31,27 @@ export class Asteroid {
 
   render() {
     rotateAndDraw(this, this.angle);
+  }
+
+  generateOriginPosition() {
+    const x = Math.floor(Math.random() * CANVAS_WIDTH);
+    const y = -100;
+    return { x, y };
+  }
+
+  generateDestinationPosition(originPosition) {
+    let x, y;
+    originPosition.x < CANVAS_WIDTH / 2
+      ? ((x = Math.random() * CANVAS_WIDTH + CANVAS_WIDTH),
+        (y = Math.random() * CANVAS_HEIGHT + CANVAS_HEIGHT))
+      : ((x = Math.random() * -CANVAS_WIDTH),
+        (y = Math.random() * CANVAS_HEIGHT + CANVAS_HEIGHT));
+
+    return { x, y };
+  }
+
+  generateVelocity() {
+    const y = Math.floor(Math.random() * 300 + 200);
+    return { x: 0, y };
   }
 }

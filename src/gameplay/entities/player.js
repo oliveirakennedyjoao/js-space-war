@@ -4,7 +4,7 @@ import { Sprite } from "../../engine/renderer/sprite.js";
 import { Sound } from "../../engine/audio/sound.js";
 
 export class Player {
-  constructor(context, particles) {
+  constructor(context, particles, sprite, shootSprite) {
     this.type = "player";
     this.position = {
       x: 500,
@@ -17,13 +17,8 @@ export class Player {
     this.height = 225;
     this.context = context;
     this.playerController = new Keyboard();
-    this.sprite = new Sprite("./src/assets/sprites/player.png", {
-      startX: 0,
-      startY: 0,
-      finalX: 1000,
-      finalY: 1000,
-    });
-    this.laser = new Sprite("./src/assets/sprites/laser_green.png");
+    this.sprite = sprite;
+    this.laser = shootSprite;
 
     this.laserSound = new Sound(
       "./src/assets/sounds/laser_shooting_sfx.wav",
@@ -58,7 +53,11 @@ export class Player {
 
   shoot() {
     this.particles.push(
-      new Shoot(this.position.x + this.width / 2 - 4, this.position.y)
+      new Shoot(
+        this.laser,
+        this.position.x + this.width / 2 - 4,
+        this.position.y
+      )
     );
     this.laserSound.play();
   }

@@ -5,11 +5,11 @@ import { Sound } from "../../engine/audio/sound.js";
 import { sinusoidalMovement } from "../../engine/physics/movement-controller.js";
 
 export class Enemy {
-  constructor(context, player) {
+  constructor(sprite, context, player) {
     this.type = "enemy";
     this.context = context;
     this.player = player;
-    this.sprite = new Sprite("./src/assets/sprites/enemy.png");
+    this.sprite = sprite;
     this.explosion = new Sprite("./src/assets/spritesheets/explosion.png");
     this.width = 150;
     this.height = 200;
