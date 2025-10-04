@@ -64,7 +64,7 @@ export class Game {
     });
 
     this.particles.forEach((particle) => particle.render());
-    renderCollisionBoxes([this.player, ...this.enemies]);
+    renderCollisionBoxes([this.player, ...this.enemies, ...this.obstacles]);
     this.ui.render();
   }
 
@@ -81,39 +81,49 @@ export class Game {
     });
 
     this.particles.forEach((particle) => particle.update());
+    this.detectEnemyCollisions();
+    this.detectPlayerCollisions();
+    this.detectObstaclesCollisions();
+  }
+
+  detectPlayerCollisions() {
     detectCollisions(
-      [this.player, ...this.enemies, ...this.particles, ...this.obstacles],
+      [this.player],
+      [...this.enemies, ...this.obstacles],
       (element1, element2) => {
-        // Lógica de colisão específica
-
-        if (element1.type === "player") {
-          if (element2.type === "enemy") {
-            return;
-          }
-
-          if (element2.type === "asteroid") {
-            element1.health -= 1;
-            element2.destroy = true;
-            return;
-          }
+        if (element2.type === "enemy") {
+          return;
         }
 
-        if (element1.type === "enemy") {
-          if (element2.type === "shoot") {
-            element1.hitted = true;
-            element2.destroy = true;
-            return;
-          }
+        if (element2.type === "asteroid") {
+          element1.health -= 1;
+          element2.destroy = true;
+          return;
         }
+      }
+    );
+  }
 
-        if (element1.type === "shoot") {
-          if (element2.type === "asteroid") {
-            element1.destroy = true;
-            element2.destroy = true;
+  detectEnemyCollisions() {
+    detectCollisions(
+      [...this.enemies],
+      [...this.particles],
+      (element1, element2) => {
+        element1.hitted = true;
+        element2.destroy = true;
+        return;
+      }
+    );
+  }
 
-            return;
-          }
-        }
+  detectObstaclesCollisions() {
+    detectCollisions(
+      [...this.obstacles],
+      [...this.particles],
+      (element1, element2) => {
+        element1.destroy = true;
+        element2.destroy = true;
+        return;
       }
     );
   }

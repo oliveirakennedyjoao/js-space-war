@@ -7,11 +7,15 @@ export function isColliding(element1, element2) {
   );
 }
 
-export function detectCollisions(elements, collisionCallback) {
-  for (let i = 0; i < elements.length; i++) {
-    for (let j = i + 1; j < elements.length; j++) {
-      if (isColliding(elements[i], elements[j])) {
-        collisionCallback(elements[i], elements[j]);
+export function detectCollisions(
+  elementGroup1,
+  elementGroup2,
+  collisionCallback
+) {
+  for (let i = 0; i < elementGroup1.length; i++) {
+    for (let j = 0; j < elementGroup2.length; j++) {
+      if (isColliding(elementGroup1[i], elementGroup2[j])) {
+        collisionCallback(elementGroup1[i], elementGroup2[j]);
       }
     }
   }
