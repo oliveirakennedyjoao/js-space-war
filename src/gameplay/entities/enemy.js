@@ -11,15 +11,12 @@ export class Enemy {
     this.player = player;
     this.sprite = sprite;
     this.explosion = new Sprite("./src/assets/spritesheets/explosion.png");
-    this.width = 150;
+    this.width = 175;
     this.height = 200;
-    this.position = {
-      x: 300,
-      y: 100,
-      velocityX: 200,
-      velocityY: 200,
-      angle: 0,
-    };
+    this.position = this.generateOriginPosition();
+    this.velocity = this.generateVelocity();
+    this.velocity;
+
     this.direction = 1;
     this.hitted = false;
     this.destroy = false;
@@ -55,25 +52,20 @@ export class Enemy {
   }
 
   update() {
-    this.move(this, this.position.velocityY, 3, 50, DELTA_TIME);
+    this.move(this, this.velocity.y * 0.2, 5, 50, DELTA_TIME);
+
+    this.position.x = Math.max(
+      0,
+      Math.min(CANVAS_WIDTH - this.width, this.position.x)
+    );
+
+    if (this.position.y > CANVAS_HEIGHT) {
+      this.destroy = true;
+    }
   }
 
   render() {
-    this.context.drawImage(
-      this.sprite.img,
-      0,
-      0,
-      820,
-      918,
-      this.position.x,
-      this.position.y,
-      250,
-      350
-    );
-  }
-
-  invertDirection() {
-    this.direction *= -1;
+    draw(this);
   }
 
   playDeadAnimation() {
@@ -100,5 +92,17 @@ export class Enemy {
 
   onDeadAnimationEnd() {
     this.destroy = true;
+  }
+
+  generateOriginPosition() {
+    const x = Math.floor(Math.random() * CANVAS_WIDTH);
+    const y = -100;
+    return { x, y };
+  }
+
+  generateVelocity() {
+    const x = Math.floor(Math.random() * 100 - 50);
+    const y = Math.floor(Math.random() * 300 + 200);
+    return { x, y };
   }
 }

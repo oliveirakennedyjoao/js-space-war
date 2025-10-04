@@ -19,8 +19,8 @@ const PLAYER_SPRITE = new Sprite("./src/assets/sprites/player.png", {
 const ENEMY_SPRITE = new Sprite("./src/assets/sprites/enemy.png", {
   startX: 0,
   startY: 0,
-  finalX: 1000,
-  finalY: 1000,
+  finalX: 472,
+  finalY: 529,
 });
 
 const ASTEROID_SPRITE = new Sprite("./src/assets/sprites/asteroid.png");
@@ -41,9 +41,17 @@ export class Game {
       SHOOT_SPRITE
     );
     this.background = new Background(context);
-    this.enemies = [new Enemy(ENEMY_SPRITE, context, this.player)];
+    this.enemies = [
+      new Enemy(ENEMY_SPRITE, context, this.player),
+      new Enemy(ENEMY_SPRITE, context, this.player),
+      new Enemy(ENEMY_SPRITE, context, this.player),
+    ];
     this.ui = new UI(this.context, this.player);
-    this.obstacles = [new Asteroid(ASTEROID_SPRITE)];
+    this.obstacles = [
+      new Asteroid(ASTEROID_SPRITE),
+      new Asteroid(ASTEROID_SPRITE),
+      new Asteroid(ASTEROID_SPRITE),
+    ];
 
     this.elements = [];
   }
@@ -85,7 +93,7 @@ export class Game {
     });
 
     this.particles.forEach((particle) => particle.render());
-    renderCollisionBoxes([this.player, ...this.enemies, ...this.obstacles]);
+    // renderCollisionBoxes([this.player, ...this.enemies, ...this.obstacles]);
     this.ui.render();
   }
 

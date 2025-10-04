@@ -64,8 +64,8 @@ export class Background {
       height: CANVAS_HEIGHT,
     };
 
-    // this.bgSound = new Sound("./src/assets/sounds/Fly.mp3");
-    // this.bgSound.play();
+    this.bgSound = new Sound("./src/assets/sounds/Fly.mp3");
+    this.bgSound.play();
   }
 
   render() {

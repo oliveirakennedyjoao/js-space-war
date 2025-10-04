@@ -1,4 +1,3 @@
-import { Sprite } from "../../engine/renderer/sprite.js";
 import { followTargetMovement } from "../../engine/physics/movement-controller.js";
 export class Asteroid {
   constructor(sprite) {
@@ -10,9 +9,8 @@ export class Asteroid {
     this.height = 150;
     this.destroy = false;
 
-    // Propriedades de rotação
-    this.angle = 0; // Ângulo atual
-    this.rotationSpeed = 2; // Velocidade de rotação (radianos por segundo)
+    this.angle = 0;
+    this.rotationSpeed = 2;
 
     this.move = followTargetMovement;
     this.destination = {
