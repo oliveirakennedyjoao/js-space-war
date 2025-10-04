@@ -4,7 +4,7 @@ import { Player } from "../gameplay/entities/player.js";
 import { Enemy } from "../gameplay/entities/enemy.js";
 import { Asteroid } from "../gameplay/entities/asteroid.js";
 import { Background } from "../gameplay/background.js";
-import { CollisionDetector } from "../engine/physics/collision-detector.js";
+import { detectCollisions } from "../engine/physics/collision-detector.js";
 import { UI } from "../ui/ui.js";
 import { renderCollisionBoxes } from "../engine/tools/debug.js";
 
@@ -15,7 +15,7 @@ export class Game {
     this.player = new Player(context, this.particles);
     this.background = new Background(context);
     this.enemies = [new Enemy(context, this.player)];
-    this.ui = new UI(context);
+    this.ui = new UI(this.context, this.player);
     this.obstacles = [
       this.generateRandomPositionAsteroid(),
       this.generateRandomPositionAsteroid(),
@@ -23,12 +23,6 @@ export class Game {
       this.generateRandomPositionAsteroid(),
       this.generateRandomPositionAsteroid(),
     ];
-    this.collisionDetector = new CollisionDetector(
-      this.player,
-      this.particles,
-      this.enemies,
-      this.context
-    );
 
     this.elements = [];
   }
@@ -54,7 +48,6 @@ export class Game {
   }
 
   clearScreen() {
-    c;
     this.context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   }
 
@@ -88,11 +81,45 @@ export class Game {
     });
 
     this.particles.forEach((particle) => particle.update());
-    this.collisionDetector.detect();
+    detectCollisions(
+      [this.player, ...this.enemies, ...this.particles, ...this.obstacles],
+      (element1, element2) => {
+        // Lógica de colisão específica
+
+        if (element1.type === "player") {
+          if (element2.type === "enemy") {
+            return;
+          }
+
+          if (element2.type === "asteroid") {
+            element1.health -= 1;
+            element2.destroy = true;
+            return;
+          }
+        }
+
+        if (element1.type === "enemy") {
+          if (element2.type === "shoot") {
+            element1.hitted = true;
+            element2.destroy = true;
+            return;
+          }
+        }
+
+        if (element1.type === "shoot") {
+          if (element2.type === "asteroid") {
+            element1.destroy = true;
+            element2.destroy = true;
+
+            return;
+          }
+        }
+      }
+    );
   }
 
   generateRandomPositionAsteroid() {
     const randomX = Math.floor(Math.random() * 2048);
-    return new Asteroid(this.context, randomX, -100);
+    return new Asteroid(randomX, -100);
   }
 }

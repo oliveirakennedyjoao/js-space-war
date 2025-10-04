@@ -1,14 +1,13 @@
 import { Sprite } from "../../engine/renderer/sprite.js";
-
+import { linearMovement } from "../../engine/physics/movement-controller.js";
 export class Asteroid {
-  constructor(context, x, y) {
+  constructor(x, y) {
+    this.type = "asteroid";
     this.sprite = new Sprite("./src/assets/sprites/asteroid.png");
-    this.context = context;
-    this.x = x;
-    this.y = y;
+    this.position = { x: x, y: y };
+    this.velocity = { x: 0, y: 200 };
     this.width = 155;
     this.height = 150;
-    this.velocityY = 200;
     this.destroy = false;
 
     // Propriedades de rotação
@@ -17,13 +16,10 @@ export class Asteroid {
   }
 
   update() {
-    // Movimento vertical
-    this.y += this.velocityY * DELTA_TIME;
-
-    // Atualiza a rotação
+    linearMovement(this, this.velocity.x, this.velocity.y, DELTA_TIME);
     this.angle += this.rotationSpeed * DELTA_TIME;
 
-    if (this.y > CANVAS_HEIGHT) {
+    if (this.position.y > CANVAS_HEIGHT) {
       this.destroy = true;
     }
   }

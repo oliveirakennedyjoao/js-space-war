@@ -22,8 +22,8 @@ function rotateAndDraw(element, angle) {
   CONTEXT.save();
 
   CONTEXT.translate(
-    element.x + element.width / 2,
-    element.y + element.height / 2
+    element.position.x + element.width / 2,
+    element.position.y + element.height / 2
   );
 
   CONTEXT.rotate(angle);

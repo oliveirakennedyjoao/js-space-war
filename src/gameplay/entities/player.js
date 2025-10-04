@@ -38,6 +38,7 @@ export class Player {
     this.spaceShipSound.play();
 
     this.particles = particles;
+    this.health = 5;
   }
 
   update() {
@@ -56,16 +57,8 @@ export class Player {
   }
 
   shoot() {
-    // width, height, posX, posY, context, particle_image
     this.particles.push(
-      new Shoot(
-        this.PLAYER_WIDTH,
-        33,
-        this.position.x,
-        this.position.y,
-        this.context,
-        this.laser
-      )
+      new Shoot(this.position.x + this.width / 2 - 4, this.position.y)
     );
     this.laserSound.play();
   }
