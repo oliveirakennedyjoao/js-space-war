@@ -14,7 +14,7 @@ export class Game {
     this.particles = [];
     this.player = new Player(context, this.particles);
     this.background = new Background(context);
-    this.enemies = [new Enemy(context)];
+    this.enemies = [new Enemy(context, this.player)];
     this.ui = new UI(context);
     this.obstacles = [
       this.generateRandomPositionAsteroid(),

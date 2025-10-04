@@ -34,8 +34,8 @@ export class CollisionDetector {
     this.context.strokeRect(
       this.player.position.x + 1,
       this.player.position.y + 1,
-      this.player.PLAYER_WIDTH + 1,
-      this.player.PLAYER_HEIGHT + 1
+      this.player.width + 1,
+      this.player.height + 1
     );
 
     // draw enemies collision box

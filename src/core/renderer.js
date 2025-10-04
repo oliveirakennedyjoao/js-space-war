@@ -4,10 +4,10 @@ const CONTEXT = CANVAS.getContext("2d");
 function draw(element) {
   CONTEXT.drawImage(
     element.sprite.img,
-    element.sprite.startX,
-    element.sprite.startY,
-    element.sprite.finalX,
-    element.sprite.finalY,
+    element.sprite.frameStartX,
+    element.sprite.frameStartY,
+    element.sprite.frameFinalX,
+    element.sprite.frameFinalY,
     element.position.x,
     element.position.y,
     element.width,
@@ -18,22 +18,19 @@ function draw(element) {
 function rotateAndDraw(element, angle) {
   CONTEXT.save();
 
-  // Move a origem para o centro do elemento
   CONTEXT.translate(
     element.x + element.width / 2,
     element.y + element.height / 2
   );
 
-  // Aplica a rotação
   CONTEXT.rotate(angle);
 
-  // Desenha a imagem centrada na nova origem (0,0)
   CONTEXT.drawImage(
     element.sprite.img,
-    0,
-    0,
-    150,
-    150,
+    element.sprite.frameStartX,
+    element.sprite.frameStartY,
+    element.sprite.frameFinalX,
+    element.sprite.frameFinalY,
     -element.width / 2,
     -element.height / 2,
     element.width,

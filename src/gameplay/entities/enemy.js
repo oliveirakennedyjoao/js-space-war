@@ -2,17 +2,19 @@ import { Frame } from "../../engine/renderer/frame.js";
 import { Sprite } from "../../engine/renderer/sprite.js";
 import { Animation } from "../../engine/renderer/animation.js";
 import { Sound } from "../../engine/audio/sound.js";
+import { sinusoidalMovement } from "../../engine/physics/movement-controller.js";
 
 export class Enemy {
-  constructor(context) {
+  constructor(context, player) {
     this.context = context;
+    this.player = player;
     this.sprite = new Sprite("./src/assets/sprites/enemy.png");
     this.explosion = new Sprite("./src/assets/spritesheets/explosion.png");
     this.width = 150;
     this.height = 200;
     this.position = {
       x: 300,
-      y: -100,
+      y: 100,
       velocityX: 200,
       velocityY: 200,
     };
@@ -47,22 +49,11 @@ export class Enemy {
 
     this.deathSound = new Sound("./src/assets/sounds/explosion.wav", false);
     this.canPlayDeathSound = true;
+    this.move = sinusoidalMovement;
   }
 
   update() {
-    if (this.position.y < 400) {
-      this.position.y += this.position.velocityY * DELTA_TIME;
-    }
-
-    if (this.direction === 1) {
-      this.position.x + 150 >= CANVAS_WIDTH
-        ? this.invertDirection()
-        : (this.position.x += this.position.velocityX * DELTA_TIME);
-    } else {
-      this.position.x <= 0
-        ? this.invertDirection()
-        : (this.position.x -= this.position.velocityX * DELTA_TIME);
-    }
+    this.move(this, this.position.velocityY, 3, 50, DELTA_TIME);
   }
 
   render() {
