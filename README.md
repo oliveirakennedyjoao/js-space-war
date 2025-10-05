@@ -4,19 +4,29 @@
 
 A Spaceship war game made using pure HTML, CSS and JavaScript.
 
-## Progresso WIP
+## Progresso
 
-### [] 1. Enemies
-
-### [] 2. Obstacles
-
-### [] 3. Power Ups
-
-### [] 4. UI
-
-### [] 5. Sounds
-
-### [] 6. Resposive
+1. [ ] Player
+   - [ ] Shoot
+   - [ ] Movement
+   - [ ] Collision Effect
+   - [ ] Death Effect
+2. [ ] Enemies
+   - [ ] Shoot
+   - [ ] Movement
+3. [ ] Obstacles
+   - [ ] Destroy Effect
+   - [ ] Movement
+4. [ ] Power Up
+   - [ ] Destroy Effect
+   - [ ] Movement
+5. [ ] UI
+   - [ ] ...
+6. [ ] Sounds
+   - [ ] Load before game start
+7. [ ] Responsivity
+   - [ ] Improve screen size
+   - [ ] Adapt to mobile devices
 
 ## Estrutura do projeto
 
