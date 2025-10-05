@@ -4,6 +4,20 @@
 
 A Spaceship war game made using pure HTML, CSS and JavaScript.
 
+## Progresso WIP
+
+### [] 1. Enemies
+
+### [] 2. Obstacles
+
+### [] 3. Power Ups
+
+### [] 4. UI
+
+### [] 5. Sounds
+
+### [] 6. Resposive
+
 ## Estrutura do projeto
 
 ```
