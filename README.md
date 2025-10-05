@@ -7,8 +7,8 @@ A Spaceship war game made using pure HTML, CSS and JavaScript.
 ## Progresso
 
 1. [ ] Player
-   - [ ] Shoot
-   - [ ] Movement
+   - [x] Shoot
+   - [x] Movement
    - [ ] Collision Effect
    - [ ] Death Effect
 2. [ ] Enemies
