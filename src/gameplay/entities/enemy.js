@@ -3,7 +3,7 @@ import { Sprite } from "../../engine/renderer/sprite.js";
 import { Animation } from "../../engine/renderer/animation.js";
 import { Sound } from "../../engine/audio/sound.js";
 import { sinusoidalMovement } from "../../engine/physics/movement-controller.js";
-
+import { drawer } from "../../core/drawer.js";
 export class Enemy {
   constructor(sprite = ENEMY_SPRITE, context, player) {
     this.type = "enemy";
@@ -65,7 +65,7 @@ export class Enemy {
   }
 
   render() {
-    draw(this);
+    drawer.draw(this);
   }
 
   playDeadAnimation() {

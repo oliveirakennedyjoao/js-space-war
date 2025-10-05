@@ -2,6 +2,7 @@ import { Keyboard } from "../../engine/input/keyboard.js";
 import { Shoot } from "../projectiles/shoot.js";
 import { Sprite } from "../../engine/renderer/sprite.js";
 import { Sound } from "../../engine/audio/sound.js";
+import { drawer } from "../../core/drawer.js";
 
 export class Player {
   constructor(context, particles, sprite, shootSprite) {
@@ -63,7 +64,7 @@ export class Player {
   }
 
   render() {
-    draw(this);
+    drawer.draw(this);
 
     if (this.playerController.actionsPressed.action1) {
       this.shoot();

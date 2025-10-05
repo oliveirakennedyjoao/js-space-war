@@ -10,9 +10,9 @@ export class Position {
     return this;
   }
 
-  add(position) {
-    this.x += position.x;
-    this.y += position.y;
+  add(x, y) {
+    this.x += x;
+    this.y += y;
     return this;
   }
 

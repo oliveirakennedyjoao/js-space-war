@@ -1,4 +1,5 @@
 import { followTargetMovement } from "../../engine/physics/movement-controller.js";
+import { drawer } from "../../core/drawer.js";
 export class Asteroid {
   constructor(sprite) {
     this.type = "asteroid";
@@ -28,7 +29,7 @@ export class Asteroid {
   }
 
   render() {
-    rotateAndDraw(this, this.angle);
+    drawer.rotateAndDraw(this, this.angle);
   }
 
   generateOriginPosition() {

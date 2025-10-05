@@ -1,5 +1,6 @@
 import { Sound } from "../engine/audio/sound.js";
 import { Sprite } from "../engine/renderer/sprite.js";
+import { drawer } from "../core/drawer.js";
 
 export class Background {
   constructor(context) {
@@ -69,11 +70,11 @@ export class Background {
   }
 
   render() {
-    draw(this.layer0);
-    draw(this.layer1);
-    draw(this.layer1_copy);
-    draw(this.layer2);
-    draw(this.layer2_copy);
+    drawer.draw(this.layer0);
+    drawer.draw(this.layer1);
+    drawer.draw(this.layer1_copy);
+    drawer.draw(this.layer2);
+    drawer.draw(this.layer2_copy);
   }
 
   updateLayerPositions(element) {

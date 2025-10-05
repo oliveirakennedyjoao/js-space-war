@@ -1,4 +1,4 @@
-import { Sprite } from "../../engine/renderer/sprite.js";
+import { drawer } from "../../core/drawer.js";
 export class Shoot {
   constructor(sprite, x, y) {
     this.sprite = sprite;
@@ -19,6 +19,6 @@ export class Shoot {
   }
 
   render() {
-    draw(this);
+    drawer.draw(this);
   }
 }
