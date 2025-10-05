@@ -18,7 +18,12 @@ const PLAYER_SPRITE = new Sprite("./src/assets/sprites/player.png", {
   finalY: 1000,
 });
 
-const ASTEROID_SPRITE = new Sprite("./src/assets/sprites/asteroid.png");
+const ASTEROID_SPRITE = new Sprite("./src/assets/sprites/asteroid.png", {
+  startX: 0,
+  startY: 0,
+  finalX: 150,
+  finalY: 155,
+});
 const SHOOT_SPRITE = new Sprite("./src/assets/sprites/laser_green.png", {
   startX: 0,
   startY: 0,
@@ -75,6 +80,8 @@ export class Game {
 
     this.elements = [];
   }
+
+  load() {}
 
   destroy() {
     for (let i = 0; i < this.particles.length; i++) {

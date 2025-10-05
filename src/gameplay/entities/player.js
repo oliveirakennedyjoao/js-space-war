@@ -8,13 +8,13 @@ export class Player {
     this.type = "player";
     this.position = {
       x: 500,
-      y: 1550,
+      y: 1650,
       velocityX: 0,
       velocityY: 0,
       angle: 0,
     };
-    this.width = 180;
-    this.height = 225;
+    this.width = 175;
+    this.height = 190;
     this.context = context;
     this.playerController = new Keyboard();
     this.sprite = sprite;
