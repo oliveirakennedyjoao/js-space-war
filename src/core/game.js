@@ -2,6 +2,8 @@
 
 import { Player } from "../gameplay/entities/player.js";
 import { Enemy } from "../gameplay/entities/enemy.js";
+import { GreenEnemy } from "../gameplay/entities/green-enemy.js";
+import { GoldenEnemy } from "../gameplay/entities/golden-enemy.js";
 import { Asteroid } from "../gameplay/entities/asteroid.js";
 import { Background } from "../gameplay/background.js";
 import { detectCollisions } from "../engine/physics/collision-detector.js";
@@ -16,19 +18,36 @@ const PLAYER_SPRITE = new Sprite("./src/assets/sprites/player.png", {
   finalY: 1000,
 });
 
-const ENEMY_SPRITE = new Sprite("./src/assets/sprites/enemy.png", {
-  startX: 0,
-  startY: 0,
-  finalX: 472,
-  finalY: 529,
-});
-
 const ASTEROID_SPRITE = new Sprite("./src/assets/sprites/asteroid.png");
 const SHOOT_SPRITE = new Sprite("./src/assets/sprites/laser_green.png", {
   startX: 0,
   startY: 0,
   finalX: 9,
   finalY: 33,
+});
+
+const GOLDEN_ENEMY_SPRITE = new Sprite(
+  "./src/assets/sprites/enemy_golden.png",
+  {
+    startX: 0,
+    startY: 0,
+    finalX: 472,
+    finalY: 529,
+  }
+);
+
+const GREEN_ENEMY_SPRITE = new Sprite("./src/assets/sprites/enemy_green.png", {
+  startX: 0,
+  startY: 0,
+  finalX: 472,
+  finalY: 529,
+});
+
+const ENEMY_SPRITE = new Sprite("./src/assets/sprites/enemy.png", {
+  startX: 0,
+  startY: 0,
+  finalX: 472,
+  finalY: 529,
 });
 export class Game {
   constructor(context) {
@@ -42,10 +61,11 @@ export class Game {
     );
     this.background = new Background(context);
     this.enemies = [
-      new Enemy(ENEMY_SPRITE, context, this.player),
-      new Enemy(ENEMY_SPRITE, context, this.player),
-      new Enemy(ENEMY_SPRITE, context, this.player),
+      this.pickRandomEnemy(),
+      this.pickRandomEnemy(),
+      this.pickRandomEnemy(),
     ];
+
     this.ui = new UI(this.context, this.player);
     this.obstacles = [
       new Asteroid(ASTEROID_SPRITE),
@@ -65,7 +85,7 @@ export class Game {
     for (let i = 0; i < this.enemies.length; i++) {
       if (this.enemies[i].destroy === true) {
         this.enemies.splice(i, 1);
-        this.enemies.push(new Enemy(ENEMY_SPRITE, this.context));
+        this.enemies.push(this.pickRandomEnemy());
       }
     }
     for (let i = 0; i < this.obstacles.length; i++) {
@@ -155,5 +175,20 @@ export class Game {
         return;
       }
     );
+  }
+
+  pickRandomEnemy() {
+    const rand = Math.floor(Math.random() * 3);
+    console.log(rand);
+    switch (rand) {
+      case 0:
+        return new GreenEnemy(GREEN_ENEMY_SPRITE, this.context, this.player);
+      case 1:
+        return new GoldenEnemy(GOLDEN_ENEMY_SPRITE, this.context, this.player);
+      case 2:
+        return new Enemy(ENEMY_SPRITE, this.context, this.player);
+      default:
+        return new Enemy(ENEMY_SPRITE, this.context, this.player);
+    }
   }
 }

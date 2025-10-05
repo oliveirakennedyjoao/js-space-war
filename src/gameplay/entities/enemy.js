@@ -5,7 +5,7 @@ import { Sound } from "../../engine/audio/sound.js";
 import { sinusoidalMovement } from "../../engine/physics/movement-controller.js";
 
 export class Enemy {
-  constructor(sprite, context, player) {
+  constructor(sprite = ENEMY_SPRITE, context, player) {
     this.type = "enemy";
     this.context = context;
     this.player = player;
