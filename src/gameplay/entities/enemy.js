@@ -1,4 +1,3 @@
-import { Frame } from "../../engine/renderer/frame.js";
 import { Sprite } from "../../engine/renderer/sprite.js";
 import { Animation } from "../../engine/renderer/animation.js";
 import { Sound } from "../../engine/audio/sound.js";
@@ -132,7 +131,6 @@ export class Enemy {
   update() {
     if (this.hitted) {
       this.explosionAnimation.update();
-      this.playDeadAnimation();
       return;
     }
 
@@ -149,7 +147,11 @@ export class Enemy {
   }
 
   render() {
-    drawer.draw(this);
+    if (this.hitted) {
+      this.playDeadAnimation();
+    } else {
+      drawer.draw(this);
+    }
   }
 
   playDeadAnimation() {

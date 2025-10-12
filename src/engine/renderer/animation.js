@@ -34,8 +34,6 @@ export class Animation {
     } else {
       this.currentFrame++;
     }
-
-    console.log(this.currentFrame);
   }
 
   getCurrentFrame() {

@@ -9,7 +9,17 @@ export class GreenEnemy extends Enemy {
   }
 
   update() {
+    if (this.hitted) {
+      this.explosionAnimation.update();
+      return;
+    }
+
     this.move(this, this.player, this.velocity.y, DELTA_TIME);
+
+    this.position.x = Math.max(
+      0,
+      Math.min(CANVAS_WIDTH - this.width, this.position.x)
+    );
 
     if (this.position.y > CANVAS_HEIGHT) {
       this.destroy = true;
