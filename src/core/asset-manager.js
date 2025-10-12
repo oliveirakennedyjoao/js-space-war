@@ -8,12 +8,14 @@ export class AssetManager {
     this.onCompleteCallback = null;
   }
 
-  // ===== CONFIGURAÇÃO DOS ASSETS =====
   getAssetList() {
     return {
       images: {
         player: "./src/assets/sprites/player.png",
         enemy: "./src/assets/sprites/enemy.png",
+        enemy_green: "./src/assets/sprites/enemy_green.png",
+        enemy_blue: "./src/assets/sprites/enemy_blue.png",
+        enemy_golden: "./src/assets/sprites/enemy_golden.png",
         asteroid: "./src/assets/sprites/asteroid.png",
         laser_green: "./src/assets/sprites/laser_green.png",
         destroyer: "./src/assets/sprites/destroyer.png",
@@ -39,7 +41,6 @@ export class AssetManager {
     };
   }
 
-  // ===== CARREGAMENTO DE IMAGENS =====
   loadImage(name, path) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -59,7 +60,6 @@ export class AssetManager {
     });
   }
 
-  // ===== CARREGAMENTO DE SONS =====
   loadSound(name, path) {
     return new Promise((resolve, reject) => {
       const audio = new Audio();
@@ -80,7 +80,6 @@ export class AssetManager {
     });
   }
 
-  // ===== CARREGAMENTO PRINCIPAL =====
   async loadAllAssets(onProgress = null, onComplete = null) {
     this.onProgressCallback = onProgress;
     this.onCompleteCallback = onComplete;
@@ -89,23 +88,19 @@ export class AssetManager {
     const imagePromises = [];
     const soundPromises = [];
 
-    // Conta total de assets
     this.totalCount =
       Object.keys(assets.images).length + Object.keys(assets.sounds).length;
     this.loadedCount = 0;
 
-    // Carrega imagens
     Object.entries(assets.images).forEach(([name, path]) => {
       imagePromises.push(this.loadImage(name, path));
     });
 
-    // Carrega sons
     Object.entries(assets.sounds).forEach(([name, path]) => {
       soundPromises.push(this.loadSound(name, path));
     });
 
     try {
-      // Aguarda todos os assets carregarem
       await Promise.all([...imagePromises, ...soundPromises]);
 
       console.log("✅ Todos os assets carregados com sucesso!");
@@ -123,7 +118,6 @@ export class AssetManager {
     }
   }
 
-  // ===== CALLBACK DE PROGRESSO =====
   onAssetLoaded() {
     this.loadedCount++;
     const progress = (this.loadedCount / this.totalCount) * 100;
@@ -139,7 +133,6 @@ export class AssetManager {
     }
   }
 
-  // ===== GETTERS PARA OS ASSETS =====
   getImage(name) {
     const image = this.images.get(name);
     if (!image) {
@@ -155,11 +148,10 @@ export class AssetManager {
       console.warn(`⚠️ Som não encontrado: ${name}`);
       return null;
     }
-    // Retorna uma nova instância para permitir múltiplas reproduções
+
     return sound.cloneNode();
   }
 
-  // ===== UTILITÁRIOS =====
   isLoaded() {
     return this.loadedCount === this.totalCount && this.totalCount > 0;
   }
@@ -168,7 +160,6 @@ export class AssetManager {
     return this.totalCount > 0 ? (this.loadedCount / this.totalCount) * 100 : 0;
   }
 
-  // ===== LIMPEZA =====
   dispose() {
     this.images.clear();
     this.sounds.clear();
@@ -177,5 +168,4 @@ export class AssetManager {
   }
 }
 
-// Singleton para uso global
 export const assetManager = new AssetManager();

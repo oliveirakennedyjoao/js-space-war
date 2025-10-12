@@ -4,13 +4,13 @@ import { Animation } from "../../engine/renderer/animation.js";
 import { Sound } from "../../engine/audio/sound.js";
 import { sinusoidalMovement } from "../../engine/physics/movement-controller.js";
 import { drawer } from "../../core/drawer.js";
+import { assetManager } from "../../core/asset-manager.js";
 export class Enemy {
-  constructor(sprite = ENEMY_SPRITE, context, player) {
+  constructor(sprite, player) {
     this.type = "enemy";
-    this.context = context;
     this.player = player;
     this.sprite = sprite;
-    this.explosion = new Sprite("./src/assets/spritesheets/explosion.png");
+    this.explosion = new Sprite(assetManager.getImage("explosion"));
     this.width = 175;
     this.height = 200;
     this.position = this.generateOriginPosition();
@@ -20,26 +20,104 @@ export class Enemy {
     this.direction = 1;
     this.hitted = false;
     this.destroy = false;
-
     this.explosionAnimation = new Animation(
-      this.explosion,
       [
-        new Frame(0, 0, 64, 64),
-        new Frame(64, 0, 64, 64),
-        new Frame(128, 0, 64, 64),
-        new Frame(192, 0, 64, 64),
-        new Frame(0, 64, 64, 64),
-        new Frame(64, 64, 64, 64),
-        new Frame(128, 64, 64, 64),
-        new Frame(192, 64, 64, 64),
-        new Frame(0, 128, 64, 64),
-        new Frame(64, 128, 64, 64),
-        new Frame(128, 128, 64, 64),
-        new Frame(192, 128, 64, 64),
-        new Frame(0, 192, 64, 64),
-        new Frame(64, 192, 64, 64),
-        new Frame(128, 192, 64, 64),
-        new Frame(192, 192, 64, 64),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 0,
+          startY: 0,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 64,
+          startY: 0,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 128,
+          startY: 0,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 192,
+          startY: 0,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 0,
+          startY: 64,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 64,
+          startY: 64,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 128,
+          startY: 64,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 192,
+          startY: 64,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 0,
+          startY: 128,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 64,
+          startY: 128,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 128,
+          startY: 128,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 192,
+          startY: 128,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 0,
+          startY: 192,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 64,
+          startY: 192,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 128,
+          startY: 192,
+          finalX: 64,
+          finalY: 64,
+        }),
+        new Sprite(assetManager.getImage("explosion"), {
+          startX: 192,
+          startY: 192,
+          finalX: 64,
+          finalY: 64,
+        }),
       ],
       2,
       false,
@@ -52,6 +130,12 @@ export class Enemy {
   }
 
   update() {
+    if (this.hitted) {
+      this.explosionAnimation.update();
+      this.playDeadAnimation();
+      return;
+    }
+
     this.move(this, this.velocity.y * 0.2, 5, 50, DELTA_TIME);
 
     this.position.x = Math.max(
@@ -69,25 +153,17 @@ export class Enemy {
   }
 
   playDeadAnimation() {
-    const { startX, startY, finalX, finalY } =
-      this.explosionAnimation.frames[this.explosionAnimation.currentFrame];
-
     if (this.canPlayDeathSound) {
       this.deathSound.play();
       this.canPlayDeathSound = false;
     }
 
-    this.context.drawImage(
-      this.explosion.img,
-      startX,
-      startY,
-      finalX,
-      finalY,
-      this.position.x,
-      this.position.y,
-      192,
-      192
-    );
+    drawer.draw({
+      sprite: this.explosionAnimation.getCurrentFrame(),
+      position: { x: this.position.x, y: this.position.y },
+      width: 128,
+      height: 128,
+    });
   }
 
   onDeadAnimationEnd() {

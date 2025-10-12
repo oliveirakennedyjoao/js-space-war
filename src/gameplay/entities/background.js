@@ -1,12 +1,12 @@
-import { Sound } from "../engine/audio/sound.js";
-import { Sprite } from "../engine/renderer/sprite.js";
-import { drawer } from "../core/drawer.js";
+import { Sound } from "../../engine/audio/sound.js";
+import { Sprite } from "../../engine/renderer/sprite.js";
+import { drawer } from "../../core/drawer.js";
+import { assetManager } from "../../core/asset-manager.js";
 
 export class Background {
-  constructor(context) {
-    this.context = context;
+  constructor() {
     this.layer0 = {
-      sprite: new Sprite("./src/assets/sprites/bkgd_0.png", {
+      sprite: new Sprite(assetManager.getImage("bkgd_0"), {
         startX: 0,
         startY: 0,
         finalX: 2000,
@@ -17,7 +17,7 @@ export class Background {
       height: CANVAS_HEIGHT,
     };
     this.layer1 = {
-      sprite: new Sprite("./src/assets/sprites/bkgd_1.png", {
+      sprite: new Sprite(assetManager.getImage("bkgd_1"), {
         startX: 0,
         startY: 0,
         finalX: 2000,
@@ -29,7 +29,7 @@ export class Background {
       height: CANVAS_HEIGHT,
     };
     this.layer1_copy = {
-      sprite: new Sprite("./src/assets/sprites/bkgd_1.png", {
+      sprite: new Sprite(assetManager.getImage("bkgd_1"), {
         startX: 0,
         startY: 0,
         finalX: 2000,
@@ -41,7 +41,7 @@ export class Background {
       height: CANVAS_HEIGHT,
     };
     this.layer2 = {
-      sprite: new Sprite("./src/assets/sprites/bkgd_2.png", {
+      sprite: new Sprite(assetManager.getImage("bkgd_2"), {
         startX: 0,
         startY: 0,
         finalX: 2000,
@@ -53,7 +53,7 @@ export class Background {
       height: CANVAS_HEIGHT,
     };
     this.layer2_copy = {
-      sprite: new Sprite("./src/assets/sprites/bkgd_2.png", {
+      sprite: new Sprite(assetManager.getImage("bkgd_2"), {
         startX: 0,
         startY: 0,
         finalX: 2000,

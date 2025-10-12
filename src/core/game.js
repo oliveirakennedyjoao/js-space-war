@@ -1,87 +1,61 @@
-// Entities
-
 import { Player } from "../gameplay/entities/player.js";
 import { Enemy } from "../gameplay/entities/enemy.js";
 import { GreenEnemy } from "../gameplay/entities/green-enemy.js";
 import { GoldenEnemy } from "../gameplay/entities/golden-enemy.js";
 import { Asteroid } from "../gameplay/entities/asteroid.js";
-import { Background } from "../gameplay/background.js";
+import { Background } from "../gameplay/entities/background.js";
 import { detectCollisions } from "../engine/physics/collision-detector.js";
 import { UI } from "../ui/ui.js";
 import { renderCollisionBoxes } from "../engine/tools/debug.js";
 import { Sprite } from "../engine/renderer/sprite.js";
+import { assetManager } from "./asset-manager.js";
+import { drawer } from "./drawer.js";
 
-const PLAYER_SPRITE = new Sprite("./src/assets/sprites/player.png", {
-  startX: 0,
-  startY: 0,
-  finalX: 1000,
-  finalY: 1000,
-});
-
-const ASTEROID_SPRITE = new Sprite("./src/assets/sprites/asteroid.png", {
-  startX: 0,
-  startY: 0,
-  finalX: 150,
-  finalY: 155,
-});
-const SHOOT_SPRITE = new Sprite("./src/assets/sprites/laser_green.png", {
-  startX: 0,
-  startY: 0,
-  finalX: 9,
-  finalY: 33,
-});
-
-const GOLDEN_ENEMY_SPRITE = new Sprite(
-  "./src/assets/sprites/enemy_golden.png",
-  {
-    startX: 0,
-    startY: 0,
-    finalX: 472,
-    finalY: 529,
-  }
-);
-
-const GREEN_ENEMY_SPRITE = new Sprite("./src/assets/sprites/enemy_green.png", {
-  startX: 0,
-  startY: 0,
-  finalX: 472,
-  finalY: 529,
-});
-
-const ENEMY_SPRITE = new Sprite("./src/assets/sprites/enemy.png", {
-  startX: 0,
-  startY: 0,
-  finalX: 472,
-  finalY: 529,
-});
 export class Game {
-  constructor(context) {
-    this.context = context;
+  constructor() {
     this.particles = [];
     this.player = new Player(
-      context,
       this.particles,
-      PLAYER_SPRITE,
-      SHOOT_SPRITE
+      new Sprite(assetManager.getImage("player"), 0, 0, 99, 75),
+      new Sprite(assetManager.getImage("laser_green"), 0, 0, 9, 33)
     );
-    this.background = new Background(context);
+    this.background = new Background();
     this.enemies = [
       this.pickRandomEnemy(),
       this.pickRandomEnemy(),
       this.pickRandomEnemy(),
     ];
 
-    this.ui = new UI(this.context, this.player);
+    this.ui = new UI(this.player);
     this.obstacles = [
-      new Asteroid(ASTEROID_SPRITE),
-      new Asteroid(ASTEROID_SPRITE),
-      new Asteroid(ASTEROID_SPRITE),
+      new Asteroid(
+        new Sprite(assetManager.getImage("asteroid"), 0, 0, 128, 128)
+      ),
+      new Asteroid(
+        new Sprite(assetManager.getImage("asteroid"), 0, 0, 128, 128)
+      ),
+      new Asteroid(
+        new Sprite(assetManager.getImage("asteroid"), 0, 0, 128, 128)
+      ),
     ];
 
     this.elements = [];
+    this.previousTime = 0;
   }
 
-  load() {}
+  start(currentTime = 0) {
+    if (!PAUSE_GAME) {
+      this.destroy();
+      this.update();
+      this.clearScreen();
+      this.render();
+
+      DELTA_TIME = (currentTime - this.previousTime) / 1000;
+      this.previousTime = currentTime;
+    }
+
+    window.requestAnimationFrame(this.start.bind(this));
+  }
 
   destroy() {
     for (let i = 0; i < this.particles.length; i++) {
@@ -98,29 +72,29 @@ export class Game {
     for (let i = 0; i < this.obstacles.length; i++) {
       if (this.obstacles[i].destroy === true) {
         this.obstacles.splice(i, 1);
-        this.obstacles.push(new Asteroid(ASTEROID_SPRITE));
+        this.obstacles.push(
+          new Asteroid(
+            new Sprite(assetManager.getImage("asteroid"), 0, 0, 128, 128)
+          )
+        );
       }
     }
   }
 
   clearScreen() {
-    this.context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    drawer.clear();
   }
 
   render() {
     this.background.render();
     this.player.render();
     this.obstacles.forEach((obstacle) => obstacle.render());
-    this.enemies.forEach((enemy) => {
-      if (enemy.hitted) {
-        enemy.playDeadAnimation();
-      } else {
-        enemy.render();
-      }
-    });
-
+    this.enemies.forEach((enemy) => enemy.render());
     this.particles.forEach((particle) => particle.render());
-    // renderCollisionBoxes([this.player, ...this.enemies, ...this.obstacles]);
+    if (DEBUG_MODE) {
+      renderCollisionBoxes([this.player, ...this.enemies, ...this.obstacles]);
+    }
+
     this.ui.render();
   }
 
@@ -128,14 +102,7 @@ export class Game {
     this.background.update();
     this.player.update();
     this.obstacles.forEach((obstacle) => obstacle.update());
-    this.enemies.forEach((enemy) => {
-      if (enemy.hitted) {
-        enemy.explosionAnimation.update();
-      } else {
-        enemy.update();
-      }
-    });
-
+    this.enemies.forEach((enemy) => enemy.update());
     this.particles.forEach((particle) => particle.update());
     this.detectEnemyCollisions();
     this.detectPlayerCollisions();
@@ -186,16 +153,28 @@ export class Game {
 
   pickRandomEnemy() {
     const rand = Math.floor(Math.random() * 3);
-    console.log(rand);
+
     switch (rand) {
       case 0:
-        return new GreenEnemy(GREEN_ENEMY_SPRITE, this.context, this.player);
+        return new GreenEnemy(
+          new Sprite(assetManager.getImage("enemy_green")),
+          this.player
+        );
       case 1:
-        return new GoldenEnemy(GOLDEN_ENEMY_SPRITE, this.context, this.player);
+        return new GoldenEnemy(
+          new Sprite(assetManager.getImage("enemy_golden")),
+          this.player
+        );
       case 2:
-        return new Enemy(ENEMY_SPRITE, this.context, this.player);
+        return new Enemy(
+          new Sprite(assetManager.getImage("enemy")),
+          this.player
+        );
       default:
-        return new Enemy(ENEMY_SPRITE, this.context, this.player);
+        return new Enemy(
+          new Sprite(assetManager.getImage("enemy")),
+          this.player
+        );
     }
   }
 }

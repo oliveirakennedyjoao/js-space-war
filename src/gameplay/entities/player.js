@@ -5,7 +5,7 @@ import { Sound } from "../../engine/audio/sound.js";
 import { drawer } from "../../core/drawer.js";
 
 export class Player {
-  constructor(context, particles, sprite, shootSprite) {
+  constructor(particles, sprite, shootSprite) {
     this.type = "player";
     this.position = {
       x: 500,
@@ -16,7 +16,6 @@ export class Player {
     };
     this.width = 175;
     this.height = 190;
-    this.context = context;
     this.playerController = new Keyboard();
     this.sprite = sprite;
     this.laser = shootSprite;

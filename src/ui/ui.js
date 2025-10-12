@@ -1,11 +1,12 @@
+import { drawer } from "../core/drawer.js";
+
 export class UI {
-  constructor(context, player) {
-    this.context = context;
+  constructor(player) {
     this.player = player;
   }
   render() {
-    this.context.font = "64px Arial";
-    this.context.fillStyle = "white";
-    this.context.fillText(`Life: ${this.player.health}`, 100, 200);
+    drawer.context.font = "64px Arial";
+    drawer.context.fillStyle = "white";
+    drawer.context.fillText(`Life: ${this.player.health}`, 100, 200);
   }
 }

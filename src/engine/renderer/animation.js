@@ -4,9 +4,8 @@ export const ANIMATION_STATE = {
 };
 
 export class Animation {
-  constructor(image, frames, frameDelay, isLoop, onAnimationEnd) {
-    this.image = image;
-    this.frames = frames;
+  constructor(sprites, frameDelay, isLoop, onAnimationEnd) {
+    this.frames = sprites;
     this.totalFrames = this.frames.length;
     this.currentFrame = 0;
     this.frameDelay = frameDelay;
@@ -35,5 +34,11 @@ export class Animation {
     } else {
       this.currentFrame++;
     }
+
+    console.log(this.currentFrame);
+  }
+
+  getCurrentFrame() {
+    return this.frames[this.currentFrame];
   }
 }

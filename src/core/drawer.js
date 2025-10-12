@@ -1,6 +1,8 @@
 export class Drawer {
   constructor() {
     this.canvas = document.getElementById("game-screen");
+    this.canvas.width = CANVAS_WIDTH;
+    this.canvas.height = CANVAS_HEIGHT;
     this.context = this.canvas.getContext("2d");
   }
 
